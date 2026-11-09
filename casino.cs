@@ -1,5 +1,10 @@
 using System;
-
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+ 
 namespace HelloWorld
 {
     class Program
@@ -7,72 +12,78 @@ namespace HelloWorld
         static void Main()
         {
             Console.WriteLine("Hello, welcome to my online casino!");
-
+            Console.Clear();
             Pengiums();
-
+ 
         }
-
-
+ 
+ 
         static void Pengiums()
         {
             Random rnd = new Random();
-            bool Next = true;
+ 
+
             bool Forward = true;
             string[] map = { "P", "-", "-", "-", "-", "-", "-", "-", "-", "-" };
             int Position = 0;
-
-            Console.Write("Do you want to play?"); char Playing = Convert.ToChar(Console.ReadLine().ToUpper());
-
-           while(Playing == 'Y')
+ 
+            Console.Write("Do you want to play? "); char Playing = Convert.ToChar(Console.ReadLine().ToUpper());
+ 
+            while (Playing == 'Y')
             {
+                Position = Position + 1;
                 PengiumsProbability(Position, Forward);
-                Forward = PengiumsProbability(Position + 1, Forward);
-
+ 
+ 
+                Forward = PengiumsProbability(Position, Forward);
+ 
                 if (Forward == true)
                 {
-                    if (Next == true)
-                    {
-                        map[Position] = "-";
-                        Position = Position + 1;
-                        map[Position] = "P";
-                        Console.WriteLine(string.Join(" ", map));
+                    map[Position - 1] = "-";
+                    map[Position] = "P";
+ 
+                    Console.WriteLine("--------------------------------------------------------");
+                    Console.WriteLine("");
+                    Console.WriteLine(string.Join(" ", map));
+                    Console.WriteLine("");
+                    Console.WriteLine("--------------------------------------------------------");
 
-                        Console.Write("Do you want to play again?"); Playing = Convert.ToChar(Console.ReadLine().ToUpper());
-                    }
-                    else
-                    {
-                        Console.WriteLine("You have failed!");
-                    }
+ 
+                    Console.Write("Do you want to go forward? "); Playing = Convert.ToChar(Console.ReadLine().ToUpper());
+                }
+                else
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("You have failed!");
+                    Console.WriteLine($"You made it to positon {Position = Position - 1}");
+                    Playing = 'N';
                 }
             }
         }
-
-
-
-
-
+ 
+ 
+ 
         static bool PengiumsProbability(int position, bool forwardAllowed)
         {
             Random rnd = new Random();
             int probability = rnd.Next(1, 101);
-            switch ((probability, position))
-            {
-                case ( < 100, 1): // Position 1: 90% chance
-                case ( < 100, 2): // Position 2: 85% chance
-                case ( < 80, 3): // Position 3: 80% chance
-                case ( < 74, 4): // Position 4: 74% chance
-                case ( < 64, 5): // Position 5: 64% chance
-                case ( < 53, 6): // Position 6: 53% chance
-                case ( < 43, 7): // Position 7: 43% chance
-                case ( < 34, 8): // Position 8: 34% chance
-                case ( < 14, 9): // Position 9: 14% chance
-                    forwardAllowed = true;
-                    break;
-                default:
-                    forwardAllowed = false;
-                    break;
-            }
-            return (forwardAllowed);
+ 
+            if (probability < 95 && position == 1) { forwardAllowed = true; return (forwardAllowed); }
+            if (probability < 87 && position == 2) { forwardAllowed = true; return (forwardAllowed); }
+            if (probability < 78 && position == 3) { forwardAllowed = true; return (forwardAllowed); } 
+            if (probability < 69 && position == 4) { forwardAllowed = true; return (forwardAllowed); } 
+            if (probability < 58 && position == 5) { forwardAllowed = true; return (forwardAllowed); }
+            if (probability < 48 && position == 6) { forwardAllowed = true; return (forwardAllowed); }
+            if (probability < 32 && position == 7) { forwardAllowed = true; return (forwardAllowed); } 
+            if (probability < 28 && position == 8) { forwardAllowed = true; return (forwardAllowed); }
+            if (probability < 13 && position == 9) { forwardAllowed = true; return (forwardAllowed); }
+            forwardAllowed = false; return (forwardAllowed);
+        }
+ 
+ 
+        static int Points(int points)
+        {
+ 
         }
     }
 }
